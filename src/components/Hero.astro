@@ -1,5 +1,6 @@
 ---
 import { person, links, stats } from '../data/site';
+import T from './T.astro';
 
 const words = person.name.split(' ');
 ---
@@ -14,20 +15,19 @@ const words = person.name.split(' ');
     </div>
     <div
       class="blob h-[22rem] w-[22rem] right-0 top-20"
-      style="background: radial-gradient(circle, #6d5ce7 0%, transparent 70%); opacity: 0.3; animation-delay: -6s"
+      style="background: radial-gradient(circle, #6d5ce7 0%, transparent 70%); opacity: 0.3"
     >
     </div>
   </div>
 
   <div class="stagger mx-auto max-w-5xl px-4 pb-10 pt-20 sm:px-6 sm:pb-20 sm:pt-32">
     <p
-      class="font-mono text-xs uppercase tracking-[0.18em]"
+      class="flex items-start gap-2 font-mono text-xs uppercase tracking-[0.16em]"
       style="--i: 0; color: var(--accent)"
     >
-      <span
-        class="mr-2 inline-block h-1.5 w-1.5 rounded-full align-middle"
-        style="background: var(--accent)"></span>
-      {person.available}
+      <span class="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full" style="background: var(--accent)"
+      ></span>
+      <T t={person.available} />
     </p>
 
     <h1 class="blur-in mt-5 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl" style="--i: 1">
@@ -35,11 +35,11 @@ const words = person.name.split(' ');
     </h1>
 
     <p class="mt-3 text-lg sm:text-xl" style="--i: 2; color: var(--muted)">
-      {person.role} · {person.location}
+      <T t={person.role} /> · <T t={person.location} />
     </p>
 
     <p class="mt-7 max-w-2xl text-base leading-relaxed sm:text-lg" style="--i: 3">
-      {person.tagline}
+      <T t={person.tagline} />
     </p>
 
     <ul class="mt-9 flex flex-wrap items-center gap-3" style="--i: 4">
@@ -51,7 +51,7 @@ const words = person.name.split(' ');
               class="lift inline-block rounded-md px-3.5 py-2 text-sm"
               style="border: 1px solid var(--line); background: var(--card)"
             >
-              {l.label}
+              <T t={l.label} />
             </a>
           </li>
         ))
@@ -69,7 +69,7 @@ const words = person.name.split(' ');
               {s.value}
             </dt>
             <dd class="mt-1 text-xs leading-snug" style="color: var(--muted)">
-              {s.label}
+              <T t={s.label} />
             </dd>
           </div>
         ))

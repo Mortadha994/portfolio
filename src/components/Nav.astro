@@ -1,12 +1,15 @@
 ---
-import { person } from '../data/site';
+import { person, sections } from '../data/site';
+import T from './T.astro';
 
-const sections = [
-  { label: 'Work', href: '#work' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
+const items = [
+  { t: sections.work.label, href: '#work' },
+  { t: sections.skills.label, href: '#skills' },
+  { t: sections.path.label, href: '#path' },
+  { t: sections.about.label, href: '#about' },
+  { t: sections.contact.label, href: '#contact' },
 ];
+
 const initials = person.name
   .split(' ')
   .map((w) => w[0])
@@ -17,22 +20,38 @@ const initials = person.name
   class="sticky top-0 z-40 backdrop-blur-md"
   style="background: color-mix(in srgb, var(--bg) 82%, transparent); border-bottom: 1px solid var(--line)"
 >
-  <nav class="mx-auto flex max-w-5xl items-center gap-3 px-4 py-4 sm:gap-6 sm:px-6">
+  <nav class="mx-auto flex max-w-5xl items-center gap-2.5 px-4 py-4 sm:gap-6 sm:px-6">
     <a href="#top" class="font-mono text-sm font-medium tracking-tight">{initials}</a>
-    <ul class="ml-auto flex items-center gap-3.5 text-xs sm:gap-6 sm:text-sm">
-      {sections.map((s) => (
-        <li>
-          <a href={s.href} class="transition-opacity hover:opacity-60" style="color: var(--muted)">
-            {s.label}
-          </a>
-        </li>
-      ))}
+
+    <ul class="nav-links ml-auto flex min-w-0 flex-1 items-center justify-end gap-3 overflow-x-auto text-xs sm:gap-6 sm:text-sm">
+      {
+        items.map((s) => (
+          <li class="shrink-0">
+            <a href={s.href} class="transition-opacity hover:opacity-60" style="color: var(--muted)">
+              <T t={s.t} />
+            </a>
+          </li>
+        ))
+      }
     </ul>
+
+    <button
+      id="lang-toggle"
+      type="button"
+      aria-label="Switch language / Changer de langue"
+      class="lang-toggle shrink-0 rounded-md px-2 py-1.5 font-mono text-[11px] transition-colors"
+      style="border: 1px solid var(--line)"
+    >
+      <span class="en-label on">EN</span><span style="color: var(--line)">/</span><span
+        class="fr-label off">FR</span
+      >
+    </button>
+
     <button
       id="theme-toggle"
       type="button"
       aria-label="Toggle colour theme"
-      class="shrink-0 rounded-md px-2.5 py-1.5 text-sm transition-colors"
+      class="shrink-0 rounded-md px-2 py-1.5 text-sm transition-colors"
       style="border: 1px solid var(--line)"
     >
       <span aria-hidden="true">◑</span>
@@ -50,6 +69,16 @@ const initials = person.name
     root.dataset.theme = next;
     try {
       localStorage.setItem('theme', next);
+    } catch {}
+  });
+
+  document.getElementById('lang-toggle')?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.dataset.lang === 'fr' ? 'en' : 'fr';
+    root.dataset.lang = next;
+    root.lang = next;
+    try {
+      localStorage.setItem('lang', next);
     } catch {}
   });
 </script>

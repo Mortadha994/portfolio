@@ -3,9 +3,11 @@ import '../styles/global.css';
 import { person } from '../data/site';
 
 interface Props { title?: string; description?: string }
+// <title> and the meta tags can only carry one language; English is the
+// wider audience for a job search, and the page itself switches.
 const {
-  title = `${person.name} — ${person.role}`,
-  description = person.tagline,
+  title = `${person.name} — ${person.role.en}`,
+  description = person.tagline.en,
 } = Astro.props;
 ---
 
@@ -27,11 +29,22 @@ const {
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
     />
     <script is:inline>
-      // Set before first paint so the page never flashes the wrong theme.
-      try {
-        const saved = localStorage.getItem('theme');
-        if (saved) document.documentElement.dataset.theme = saved;
-      } catch {}
+      // Both set before first paint: no flash of the wrong theme, and no
+      // flash of both languages at once.
+      (() => {
+        const root = document.documentElement;
+        let theme, lang;
+        try {
+          theme = localStorage.getItem('theme');
+          lang = localStorage.getItem('lang');
+        } catch {}
+        if (theme) root.dataset.theme = theme;
+        if (!lang) {
+          lang = (navigator.language || 'en').toLowerCase().startsWith('fr') ? 'fr' : 'en';
+        }
+        root.dataset.lang = lang;
+        root.lang = lang;
+      })();
     </script>
   </head>
   <body class="font-sans">

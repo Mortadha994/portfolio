@@ -331,3 +331,52 @@ body {
     transform: none;
   }
 }
+
+/* ---------- Bilingual ---------- */
+/* Both languages are in the HTML; only the active one is shown. The root
+   carries data-lang, set before first paint so there is no flash. */
+
+:root[data-lang='en'] [data-l='fr'],
+:root[data-lang='fr'] [data-l='en'] {
+  display: none;
+}
+
+/* No data-lang yet (JS disabled): show English, hide French, so the page is
+   never doubled up. */
+:root:not([data-lang]) [data-l='fr'] {
+  display: none;
+}
+
+.lang-toggle {
+  font-variant-numeric: tabular-nums;
+}
+
+.lang-toggle .on {
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.lang-toggle .off {
+  color: var(--muted);
+}
+
+:root[data-lang='fr'] .lang-toggle .en-label {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+:root[data-lang='fr'] .lang-toggle .fr-label {
+  color: var(--fg);
+  font-weight: 500;
+}
+
+/* On a narrow phone the five section links plus both toggles exceed the
+   viewport. The link row scrolls on its own rather than widening the page. */
+.nav-links {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.nav-links::-webkit-scrollbar {
+  display: none;
+}

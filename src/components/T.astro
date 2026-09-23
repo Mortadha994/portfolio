@@ -1,0 +1,11 @@
+---
+// Renders a bilingual string. Both languages go into the HTML; CSS hides the
+// one that isn't active, so switching costs nothing and works without JS
+// having to re-render anything.
+import type { L } from '../data/site';
+
+interface Props { t: L; class?: string }
+const { t, class: className } = Astro.props;
+---
+
+<span class={className}><span lang="en" data-l="en">{t.en}</span><span lang="fr" data-l="fr">{t.fr}</span></span>

@@ -1,5 +1,7 @@
 ---
 import type { Project } from '../data/site';
+import { ui } from '../data/site';
+import T from './T.astro';
 
 interface Props { project: Project; index: number }
 const { project, index } = Astro.props;
@@ -21,23 +23,25 @@ const slug = project.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
             class="rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em]"
             style="background: var(--accent-soft); color: var(--accent)"
           >
-            Featured
+            <T t={ui.featured} />
           </span>
         )
       }
       <span class="ml-auto font-mono text-xs" style="color: var(--muted)">
-        {project.kind} · {project.year}
+        <T t={project.kind} /> · {project.year}
       </span>
     </div>
 
-    <p class="mt-4 max-w-3xl text-base leading-relaxed sm:text-lg">{project.blurb}</p>
+    <p class="mt-4 max-w-3xl text-base leading-relaxed sm:text-lg">
+      <T t={project.blurb} />
+    </p>
 
     <!-- The problem, set apart -->
     <blockquote
       class="mt-7 max-w-3xl rounded-r-lg py-2 pl-5 text-sm leading-relaxed"
       style="border-left: 2px solid var(--accent); color: var(--muted)"
     >
-      {project.problem}
+      <T t={project.problem} />
     </blockquote>
 
     <!-- Detail, two up on desktop -->
@@ -45,9 +49,11 @@ const slug = project.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       {
         project.detail.map((d) => (
           <div>
-            <h4 class="text-sm font-semibold tracking-tight">{d.heading}</h4>
+            <h4 class="text-sm font-semibold tracking-tight">
+              <T t={d.heading} />
+            </h4>
             <p class="mt-2 text-sm leading-relaxed" style="color: var(--muted)">
-              {d.body}
+              <T t={d.body} />
             </p>
           </div>
         ))
@@ -73,12 +79,12 @@ const slug = project.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
         <div class="mt-7 flex flex-wrap gap-5 text-sm">
           {project.href && (
             <a href={project.href} class="ul-grow" style="color: var(--accent)">
-              Live site →
+              <T t={ui.liveSite} />
             </a>
           )}
           {project.repo && (
             <a href={project.repo} class="ul-grow" style="color: var(--accent)">
-              Source →
+              <T t={ui.source} />
             </a>
           )}
         </div>
@@ -86,16 +92,16 @@ const slug = project.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     }
   </div>
 
-  <!-- Screenshot strip: scrolls sideways, snaps, full-bleed within the card -->
+  <!-- Screenshots: the track pans itself as the card crosses the viewport -->
   {
     project.shots.length > 0 && (
       <div class="pb-7" style="border-top: 1px solid var(--line)">
         <div class="flex items-baseline justify-between px-6 pt-6 sm:px-9">
           <p class="font-mono text-[10px] uppercase tracking-[0.14em]" style="color: var(--muted)">
-            {project.shots.length} screens
+            {project.shots.length} <T t={ui.screens} />
           </p>
           <p class="font-mono text-[10px]" style="color: var(--muted)">
-            auto
+            <T t={ui.auto} />
           </p>
         </div>
 
@@ -103,26 +109,29 @@ const slug = project.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
           <ul class="track flex w-max gap-4">
             {project.shots.map((shot) => (
               <li class="shot flex w-[min(84vw,30rem)] shrink-0 flex-col">
-              <div class="flex flex-1 items-start overflow-hidden rounded-lg" style="border: 1px solid var(--line)">
-                <img
-                  src={shot.src}
-                  alt={shot.alt}
-                  loading="lazy"
-                  decoding="async"
-                  class="block h-auto w-full"
-                />
-              </div>
-              <p class="mt-2.5 pt-1 text-xs" style="color: var(--muted)">
-                {shot.caption}
-              </p>
-            </li>
-          ))}
+                <div
+                  class="flex flex-1 items-start overflow-hidden rounded-lg"
+                  style="border: 1px solid var(--line)"
+                >
+                  <img
+                    src={shot.src}
+                    alt={shot.alt.en}
+                    loading="lazy"
+                    decoding="async"
+                    class="block h-auto w-full"
+                  />
+                </div>
+                <p class="mt-2.5 pt-1 text-xs" style="color: var(--muted)">
+                  <T t={shot.caption} />
+                </p>
+              </li>
+            ))}
           </ul>
         </div>
 
         {project.note && (
           <p class="px-6 pt-2 text-[11px] italic sm:px-9" style="color: var(--muted)">
-            {project.note}
+            <T t={project.note} />
           </p>
         )}
       </div>
