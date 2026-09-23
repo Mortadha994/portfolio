@@ -115,7 +115,6 @@ body {
   filter: blur(72px);
   opacity: 0.55;
   pointer-events: none;
-  animation: breathe 14s ease-in-out infinite;
 }
 
 /* Section label underline that draws itself in. */
@@ -170,13 +169,14 @@ body {
 
 .shot img {
   filter: var(--shot-filter);
+  transform: translateY(var(--shot-y, 0px)) scale(var(--shot-scale, 1));
   transition:
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    --shot-scale 0.45s cubic-bezier(0.22, 1, 0.36, 1),
     filter 0.45s ease;
 }
 
 .shot:hover img {
-  transform: scale(1.03);
+  --shot-scale: 1.03;
   filter: none;
 }
 
@@ -272,4 +272,42 @@ body {
   #progress {
     display: none;
   }
+}
+
+/* Registered so Motion can interpolate it as a number, and so the scroll
+   scale composes with the hover lift instead of overwriting its transform. */
+@property --card-scale {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 1;
+}
+
+.lift {
+  transform: translateY(0) scale(var(--card-scale, 1));
+}
+
+.lift:hover {
+  transform: translateY(-4px) scale(var(--card-scale, 1));
+}
+
+@property --shot-y {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --shot-scale {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 1;
+}
+
+/* .reveal.in sets transform:none, which out-specifies .lift and silently
+   swallowed the scroll scale. These two win the cascade and compose both. */
+.lift.reveal.in {
+  transform: translateY(0) scale(var(--card-scale, 1));
+}
+
+.lift.reveal.in:hover {
+  transform: translateY(-4px) scale(var(--card-scale, 1));
 }

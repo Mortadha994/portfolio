@@ -62,7 +62,12 @@ const words = person.name.split(' ');
       {
         stats.map((s) => (
           <div>
-            <dt class="text-2xl font-semibold tracking-tight sm:text-3xl">{s.value}</dt>
+            <dt
+              class="text-2xl font-semibold tracking-tight sm:text-3xl"
+              data-count={/^[0-9]+$/.test(s.value) ? s.value : undefined}
+            >
+              {s.value}
+            </dt>
             <dd class="mt-1 text-xs leading-snug" style="color: var(--muted)">
               {s.label}
             </dd>

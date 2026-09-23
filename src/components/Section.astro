@@ -7,7 +7,7 @@ const { id, label, title } = Astro.props;
   <div class="reveal">
     <p class="font-mono text-xs uppercase tracking-[0.18em]" style="color: var(--accent)">{label}</p>
     <div class="rule mt-2 h-px w-12" style="background: var(--accent)"></div>
-    <h2 class="mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h2>
+    <h2 data-parallax class="mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h2>
   </div>
   <div class="mt-10"><slot /></div>
 </section>
