@@ -54,3 +54,18 @@ first paint so the page never flashes the wrong theme.
 All CSS, driven by one small `IntersectionObserver` in `Base.astro` that adds
 `.in` to `.reveal` elements as they scroll into view. Everything collapses under
 `prefers-reduced-motion: reduce`.
+
+## Deploying (Cloudflare Pages)
+
+Connected through the Pages Git integration, so every push to `main` deploys:
+
+| Setting | Value |
+|---|---|
+| Framework preset | Astro |
+| Build command | `npm run build` |
+| Output directory | `dist` |
+| Node version | 22 (pinned in `.nvmrc`) |
+
+`public/_headers` sets long-lived caching for the fingerprinted `/_astro/`
+assets and a few security headers. Update `site` in `astro.config.mjs` if you
+attach a custom domain.

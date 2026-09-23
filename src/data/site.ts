@@ -199,7 +199,28 @@ export const projects: Project[] = [
       },
     ],
     stack: ['Java', 'Spring Boot 3', 'Spring Security', 'JPA / Hibernate', 'Angular 17', 'TypeScript', 'FastAPI', 'Groq / Llama 3.3', 'PyMuPDF', 'PostgreSQL', 'STOMP / WebSocket', 'Docker', 'nginx'],
-    shots: [],
+    shots: [
+      {
+        src: '/shots/pm-kanban.png',
+        alt: 'The Kanban board with four columns, priority badges and workload counters',
+        caption: 'Kanban — four columns, priorities, workload counters',
+      },
+      {
+        src: '/shots/pm-profile.png',
+        alt: 'The AI CV analyser, offering to extract skills from an uploaded PDF résumé',
+        caption: 'Analyseur de CV — a PDF becomes a skill profile',
+      },
+      {
+        src: '/shots/pm-dashboard.png',
+        alt: 'The admin dashboard with project, task and team counters',
+        caption: 'Dashboard — projects, tasks and seats at a glance',
+      },
+      {
+        src: '/shots/pm-login.png',
+        alt: 'The ProManager sign-in screen',
+        caption: 'Sign-in, with demo access spelled out',
+      },
+    ],
     repo: 'https://github.com/Mortadha994/project-manager',
     note: 'Built with a teammate.',
   },
