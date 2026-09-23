@@ -17,9 +17,9 @@ const initials = person.name
   class="sticky top-0 z-40 backdrop-blur-md"
   style="background: color-mix(in srgb, var(--bg) 82%, transparent); border-bottom: 1px solid var(--line)"
 >
-  <nav class="mx-auto flex max-w-5xl items-center gap-6 px-4 py-4 sm:px-6">
+  <nav class="mx-auto flex max-w-5xl items-center gap-3 px-4 py-4 sm:gap-6 sm:px-6">
     <a href="#top" class="font-mono text-sm font-medium tracking-tight">{initials}</a>
-    <ul class="ml-auto hidden items-center gap-6 text-sm sm:flex">
+    <ul class="ml-auto flex items-center gap-3.5 text-xs sm:gap-6 sm:text-sm">
       {sections.map((s) => (
         <li>
           <a href={s.href} class="transition-opacity hover:opacity-60" style="color: var(--muted)">
@@ -32,7 +32,7 @@ const initials = person.name
       id="theme-toggle"
       type="button"
       aria-label="Toggle colour theme"
-      class="ml-auto rounded-md px-2.5 py-1.5 text-sm transition-colors sm:ml-0"
+      class="shrink-0 rounded-md px-2.5 py-1.5 text-sm transition-colors"
       style="border: 1px solid var(--line)"
     >
       <span aria-hidden="true">◑</span>

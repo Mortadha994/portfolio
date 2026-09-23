@@ -18,9 +18,9 @@ export const links = [
 
 // Numbers that sit under the hero. Keep them true or cut them.
 export const stats = [
-  { value: '5', label: 'Platforms shipped end to end' },
-  { value: '5', label: 'Backend stacks worked in' },
-  { value: 'FR / EN', label: 'Interfaces built bilingual' },
+  { value: '5', label: 'Projects built end to end' },
+  { value: '5', label: 'Backend stacks: Python, Java, C#, PHP, JS' },
+  { value: '3', label: 'Of them with AI at the core' },
 ];
 
 export type Shot = { src: string; alt: string; caption: string };
