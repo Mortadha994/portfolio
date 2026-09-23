@@ -1,7 +1,7 @@
 // Every word on the site lives here. Edit this file, not the components.
 
 export const person = {
-  name: 'Mortadha Hachani', // TODO confirm spelling / preferred form
+  name: 'Med Mortadha Hachani',
   role: 'Full-stack & AI engineer',
   tagline:
     'I build things that have to work for real people — an AI tutor for Tunisian students, a governance platform for enterprise AI tooling, a telemedicine triage system. Shipped end to end: retrieval, API, UI, migrations, Docker, deploy.',
@@ -275,35 +275,51 @@ export const projects: Project[] = [
     repo: 'https://github.com/Mortadha994/Atelier_medical',
   },
   {
-    name: 'Espace Collaborateur',
-    kind: 'Graduation project (PFE) · team',
+    name: 'DigiRH',
+    kind: 'Graduation project (PFE) · team of two',
     year: '2025',
     featured: true,
     blurb:
-      'A Flutter app that collapses everything an employee needs into one place — accounts and cards, leave and training requests, meetings, internal chat and a wellbeing score — on an ASP.NET Core backend with real-time push.',
+      'A ground-up rewrite of the HR app used by 300+ staff at Société Tunisienne de Banque — Flutter on .NET Core 8, replacing a dated portal with one app for accounts, requests, meetings, chat and wellbeing.',
     problem:
-      'An employee’s working life is scattered across systems that do not talk to each other: one for payroll and cards, another for leave requests, a third for meetings, a mailing list for announcements. Each one is a separate login and a separate habit, so most of them go unused.',
+      'The bank already had DigiRH; the problem was that people avoided it. The ergonomics were dated, mobile access was limited, nothing arrived in real time, and the data handling was not good enough for a bank. An HR tool nobody opens is not an HR tool.',
     detail: [
       {
-        heading: 'Banking, HR and social in one shell',
-        body: 'Accounts, cards and credit details sit beside leave, advance, authorisation and training requests, a shared calendar of meetings and events, and internal polls — each an EF Core entity with its own controller, surfaced through one bottom-nav app rather than one portal per department.',
+        heading: 'One app instead of a portal',
+        body: 'Accounts, cards and credit — with repayment charted against the outstanding balance — sit beside leave, advance, authorisation and training requests, a shared calendar, company news and internal polls. Each is a .NET entity with its own controller, surfaced through one bottom-nav app on Web, Android and iOS from a single Flutter codebase.',
       },
       {
-        heading: 'Real time, not refresh',
-        body: 'Two SignalR hubs push chat messages and notifications straight to the device, with local notifications on the Flutter side, so a meeting invitation or a reply lands without the user pulling to refresh.',
+        heading: 'Real time was the point',
+        body: 'The old app had no live notifications at all. Two SignalR hubs now push chat and notifications to the device; if the recipient is offline the notification is persisted and delivered when they return, and an unread one stays unread rather than being silently dropped.',
       },
       {
-        heading: 'A wellbeing score that means something',
-        body: 'The wellness module scores and charts how an employee is doing over time with gauges and timelines, rather than filing a survey result away where nobody sees it.',
+        heading: 'Wellbeing that reaches a manager',
+        body: 'Employees answer periodic polls that produce a wellbeing score with an alert level and a message. Managers see aggregated team scores — so a dip surfaces to someone who can act on it, instead of a survey result nobody reads.',
       },
       {
-        heading: 'State kept honest',
-        body: 'Cubit holds app state, Dio handles the API layer, and JWTs are decoded client-side to gate what a user can reach — with full password reset, verification codes and profile editing behind it.',
+        heading: 'Modelled before it was built',
+        body: 'Four Scrum sprints, each opening with use-case refinement, class, sequence and activity diagrams before any code. The notification flow was drawn as an activity diagram down to the offline branch — which is why that case works rather than being discovered in testing.',
       },
     ],
-    stack: ['Flutter', 'Dart', 'Cubit / BLoC', 'C#', 'ASP.NET Core', 'Entity Framework', 'SignalR', 'JWT', 'Dio', 'fl_chart'],
-    shots: [],
-    note: 'Two private repositories on a teammate’s account; built against a Tunisian bank’s employee systems.',
+    stack: ['Flutter', 'Dart', 'Cubit / BLoC', 'C#', '.NET Core 8', 'Entity Framework', 'SQL Server', 'SignalR', 'JWT', 'Swagger', 'Scrum'],
+    shots: [
+      {
+        src: '/shots/digirh-home.webp',
+        alt: 'The DigiRH home screen showing an account balance and the request shortcuts',
+        caption: 'Home — account, balance, and every request one tap away',
+      },
+      {
+        src: '/shots/digirh-screens.webp',
+        alt: 'The calendar, main menu and credit breakdown screens side by side',
+        caption: 'Calendar, menu and credit — one Flutter codebase, three platforms',
+      },
+      {
+        src: '/shots/digirh-before.webp',
+        alt: 'The previous DigiRH app the project replaced',
+        caption: 'What it replaced — the app staff were avoiding',
+      },
+    ],
+    note: 'Built with Med Amin Zouaoui at Université de Carthage (FSEG Nabeul), 2024–2025. Repositories are private.',
   },
   // TODO add more here. Same shape.
 ];
@@ -319,7 +335,7 @@ export const skills = [
   },
   {
     group: 'Mobile & real-time',
-    items: ['Flutter', 'Dart', 'Cubit / BLoC', 'SignalR', 'Push notifications'],
+    items: ['Flutter', 'Dart', 'Cubit / BLoC', 'SignalR', 'Push notifications', 'Android', 'iOS'],
   },
   {
     group: 'Frontend',
