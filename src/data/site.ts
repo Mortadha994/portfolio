@@ -13,8 +13,7 @@ export const person = {
 export const links = [
   { label: 'GitHub', href: 'https://github.com/Mortadha994' },
   { label: 'Email', href: 'mailto:hachanimedmortadha@outlook.com' },
-  { label: 'LinkedIn', href: '#' }, // TODO your LinkedIn URL
-  { label: 'CV (PDF)', href: '/cv.pdf' }, // TODO drop cv.pdf into public/
+  { label: 'CV (PDF)', href: '/cv.pdf' },
 ];
 
 // Numbers that sit under the hero. Keep them true or cut them.
