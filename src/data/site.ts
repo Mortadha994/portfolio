@@ -230,7 +230,28 @@ export const projects: Project[] = [
       },
     ],
     stack: ['PHP 8.3', 'Laravel', 'Blade', 'Alpine.js', 'Tailwind', 'MySQL', 'Groq / Llama 3.3', 'Vite'],
-    shots: [],
+    shots: [
+      {
+        src: '/shots/med-patient.png',
+        alt: 'The patient dashboard, with the next appointment, the AI assistant and recorded vitals',
+        caption: 'Espace patient — next appointment, vitals, agenda',
+      },
+      {
+        src: '/shots/med-ai.png',
+        alt: 'The AI orientation screen with symptoms described in free text',
+        caption: 'Orientation IA — symptoms in, speciality and urgency out',
+      },
+      {
+        src: '/shots/med-doctor.png',
+        alt: 'The doctor dashboard showing the day’s schedule and critical alerts',
+        caption: 'Espace médecin — the day’s plan and critical alerts',
+      },
+      {
+        src: '/shots/med-suivi.png',
+        alt: 'Health tracking with blood pressure and glycaemia charts against critical thresholds',
+        caption: 'Suivi santé — constants charted against thresholds',
+      },
+    ],
     repo: 'https://github.com/Mortadha994/Atelier_medical',
   },
   {
