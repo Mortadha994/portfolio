@@ -1,7 +1,7 @@
 // Every word on the site lives here. Edit this file, not the components.
 
 export const person = {
-  name: 'Med Mortadha Hachani',
+  name: 'Mohamed Mortadha Hachani',
   role: 'Full-stack & AI engineer',
   tagline:
     'I build things that have to work for real people — an AI tutor for Tunisian students, a governance platform for enterprise AI tooling, a telemedicine triage system. Shipped end to end: retrieval, API, UI, migrations, Docker, deploy.',
@@ -12,6 +12,7 @@ export const person = {
 
 export const links = [
   { label: 'GitHub', href: 'https://github.com/Mortadha994' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/hachanimortadha/' },
   { label: 'Email', href: 'mailto:hachanimedmortadha@outlook.com' },
   { label: 'CV (PDF)', href: '/cv.pdf' },
 ];

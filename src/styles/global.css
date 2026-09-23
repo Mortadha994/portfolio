@@ -213,3 +213,63 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ---------- Additions ---------- */
+
+/* Reading-progress bar; Motion binds its scaleX to scroll. */
+#progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 50;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+/* Hero words blur in, one after another. */
+@keyframes unblur {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+.blur-in > span {
+  display: inline-block;
+  animation: unblur 0.65s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: calc(var(--w, 0) * 80ms + 120ms);
+  white-space: pre;
+}
+
+/* Jump-to-project index above the cards. */
+.index-chip {
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.index-chip:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
+  background: var(--accent-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blur-in > span {
+    animation: none;
+  }
+  #progress {
+    display: none;
+  }
+}

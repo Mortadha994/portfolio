@@ -43,6 +43,8 @@ const {
       Skip to content
     </a>
 
+    <div id="progress"></div>
+
     <slot />
 
     <script is:inline>
@@ -73,6 +75,9 @@ const {
 
         items.forEach((el) => io.observe(el));
       })();
+    </script>
+    <script>
+      import '../scripts/enhance.ts';
     </script>
   </body>
 </html>

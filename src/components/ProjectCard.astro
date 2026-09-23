@@ -3,10 +3,12 @@ import type { Project } from '../data/site';
 
 interface Props { project: Project; index: number }
 const { project, index } = Astro.props;
+const slug = project.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 ---
 
 <article
-  class="lift reveal overflow-hidden rounded-2xl"
+  id={slug}
+  class="lift reveal scroll-mt-24 overflow-hidden rounded-2xl"
   style={`--i: ${index}; border: 1px solid var(--line); background: var(--card)`}
 >
   <div class="p-6 sm:p-9">
@@ -53,7 +55,7 @@ const { project, index } = Astro.props;
     </div>
 
     <!-- Stack -->
-    <ul class="mt-9 flex flex-wrap gap-2">
+    <ul data-chips class="mt-9 flex flex-wrap gap-2">
       {
         project.stack.map((s) => (
           <li

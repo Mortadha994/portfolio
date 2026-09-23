@@ -7,6 +7,9 @@ import ProjectCard from '../components/ProjectCard.astro';
 import { person, projects, skills, about, links } from '../data/site';
 
 const year = new Date().getFullYear();
+
+// Must match the slug ProjectCard puts on each <article>.
+const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 ---
 
 <Base>
@@ -15,6 +18,23 @@ const year = new Date().getFullYear();
     <Hero />
 
     <Section id="work" label="Work" title="Things I've built">
+      <ul class="reveal mb-10 flex flex-wrap gap-2">
+        {
+          projects.map((p) => (
+            <li>
+              <a
+                href={'#' + slug(p.name)}
+                class="index-chip inline-flex items-baseline gap-2 rounded-full px-3.5 py-1.5 text-sm"
+                style="border: 1px solid var(--line); background: var(--card)"
+              >
+                <span>{p.name}</span>
+                <span class="font-mono text-[10px]" style="color: var(--muted)">{p.year}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
       <div class="space-y-8">
         {projects.map((p, i) => <ProjectCard project={p} index={i} />)}
       </div>

@@ -1,5 +1,7 @@
 ---
 import { person, links, stats } from '../data/site';
+
+const words = person.name.split(' ');
 ---
 
 <section id="top" class="relative overflow-hidden">
@@ -28,8 +30,8 @@ import { person, links, stats } from '../data/site';
       {person.available}
     </p>
 
-    <h1 class="mt-5 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl" style="--i: 1">
-      {person.name}
+    <h1 class="blur-in mt-5 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl" style="--i: 1">
+      {words.map((w, i) => <span style={`--w: ${i}`}>{i ? ' ' + w : w}</span>)}
     </h1>
 
     <p class="mt-3 text-lg sm:text-xl" style="--i: 2; color: var(--muted)">
