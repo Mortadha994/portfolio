@@ -1,0 +1,72 @@
+---
+import { person, links, stats } from '../data/site';
+---
+
+<section id="top" class="relative overflow-hidden">
+  <!-- Ambient colour, purely decorative. -->
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div
+      class="blob h-[28rem] w-[28rem] -left-24 -top-32"
+      style="background: radial-gradient(circle, var(--accent) 0%, transparent 70%)"
+    >
+    </div>
+    <div
+      class="blob h-[22rem] w-[22rem] right-0 top-20"
+      style="background: radial-gradient(circle, #6d5ce7 0%, transparent 70%); opacity: 0.3; animation-delay: -6s"
+    >
+    </div>
+  </div>
+
+  <div class="stagger mx-auto max-w-5xl px-4 pb-10 pt-20 sm:px-6 sm:pb-20 sm:pt-32">
+    <p
+      class="font-mono text-xs uppercase tracking-[0.18em]"
+      style="--i: 0; color: var(--accent)"
+    >
+      <span
+        class="mr-2 inline-block h-1.5 w-1.5 rounded-full align-middle"
+        style="background: var(--accent)"></span>
+      {person.available}
+    </p>
+
+    <h1 class="mt-5 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl" style="--i: 1">
+      {person.name}
+    </h1>
+
+    <p class="mt-3 text-lg sm:text-xl" style="--i: 2; color: var(--muted)">
+      {person.role} · {person.location}
+    </p>
+
+    <p class="mt-7 max-w-2xl text-base leading-relaxed sm:text-lg" style="--i: 3">
+      {person.tagline}
+    </p>
+
+    <ul class="mt-9 flex flex-wrap items-center gap-3" style="--i: 4">
+      {
+        links.map((l) => (
+          <li>
+            <a
+              href={l.href}
+              class="lift inline-block rounded-md px-3.5 py-2 text-sm"
+              style="border: 1px solid var(--line); background: var(--card)"
+            >
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <dl class="mt-14 grid max-w-xl grid-cols-3 gap-6" style="--i: 5">
+      {
+        stats.map((s) => (
+          <div>
+            <dt class="text-2xl font-semibold tracking-tight sm:text-3xl">{s.value}</dt>
+            <dd class="mt-1 text-xs leading-snug" style="color: var(--muted)">
+              {s.label}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

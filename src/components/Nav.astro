@@ -1,0 +1,55 @@
+---
+import { person } from '../data/site';
+
+const sections = [
+  { label: 'Work', href: '#work' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'About', href: '#about' },
+  { label: 'Contact', href: '#contact' },
+];
+const initials = person.name
+  .split(' ')
+  .map((w) => w[0])
+  .join('');
+---
+
+<header
+  class="sticky top-0 z-40 backdrop-blur-md"
+  style="background: color-mix(in srgb, var(--bg) 82%, transparent); border-bottom: 1px solid var(--line)"
+>
+  <nav class="mx-auto flex max-w-5xl items-center gap-6 px-4 py-4 sm:px-6">
+    <a href="#top" class="font-mono text-sm font-medium tracking-tight">{initials}</a>
+    <ul class="ml-auto hidden items-center gap-6 text-sm sm:flex">
+      {sections.map((s) => (
+        <li>
+          <a href={s.href} class="transition-opacity hover:opacity-60" style="color: var(--muted)">
+            {s.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <button
+      id="theme-toggle"
+      type="button"
+      aria-label="Toggle colour theme"
+      class="ml-auto rounded-md px-2.5 py-1.5 text-sm transition-colors sm:ml-0"
+      style="border: 1px solid var(--line)"
+    >
+      <span aria-hidden="true">◑</span>
+    </button>
+  </nav>
+</header>
+
+<script is:inline>
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const dark =
+      root.dataset.theme === 'dark' ||
+      (!root.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+    const next = dark ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
+  });
+</script>

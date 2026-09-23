@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { person, projects, skills, about, links } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<Base>
+  <Nav />
+  <main id="main">
+    <Hero />
+
+    <Section id="work" label="Work" title="Things I've built">
+      <div class="space-y-8">
+        {projects.map((p, i) => <ProjectCard project={p} index={i} />)}
+      </div>
+    </Section>
+
+    <Section id="skills" label="Skills" title="What I work with">
+      <div class="grid gap-5 sm:grid-cols-2">
+        {
+          skills.map((g, i) => (
+            <div
+              class="lift reveal rounded-xl p-5"
+              style={`--i: ${i}; border: 1px solid var(--line); background: var(--card)`}
+            >
+              <h3 class="font-mono text-xs uppercase tracking-[0.15em]" style="color: var(--accent)">
+                {g.group}
+              </h3>
+              <ul class="mt-4 flex flex-wrap gap-2">
+                {g.items.map((item) => (
+                  <li
+                    class="chip rounded-md px-2 py-1 text-xs"
+                    style="border: 1px solid var(--line); color: var(--muted)"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </Section>
+
+    <Section id="about" label="About" title="A bit of context">
+      <div class="max-w-2xl space-y-4 text-base leading-relaxed">
+        {about.map((p, i) => <p class="reveal" style={`--i: ${i}`}>{p}</p>)}
+      </div>
+    </Section>
+
+    <Section id="contact" label="Contact" title="Get in touch">
+      <div class="reveal max-w-2xl">
+        <p class="text-base leading-relaxed">
+          The fastest way to reach me is email. I read everything.
+        </p>
+        <a
+          href={`mailto:${person.email}`}
+          class="lift mt-7 inline-block rounded-md px-5 py-3 text-sm font-medium"
+          style="background: var(--accent); color: var(--bg)"
+        >
+          {person.email}
+        </a>
+      </div>
+    </Section>
+  </main>
+
+  <footer class="mx-auto max-w-5xl px-4 py-10 sm:px-6" style="border-top: 1px solid var(--line)">
+    <div class="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm" style="color: var(--muted)">
+      <span>© {year} {person.name}</span>
+      <ul class="flex flex-wrap gap-x-5 gap-y-2">
+        {links.map((l) => <li><a href={l.href} class="ul-grow">{l.label}</a></li>)}
+      </ul>
+    </div>
+  </footer>
+</Base>

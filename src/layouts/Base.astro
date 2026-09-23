@@ -1,0 +1,78 @@
+---
+import '../styles/global.css';
+import { person } from '../data/site';
+
+interface Props { title?: string; description?: string }
+const {
+  title = `${person.name} — ${person.role}`,
+  description = person.tagline,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+    <script is:inline>
+      // Set before first paint so the page never flashes the wrong theme.
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved) document.documentElement.dataset.theme = saved;
+      } catch {}
+    </script>
+  </head>
+  <body class="font-sans">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:px-4 focus:py-2"
+      style="background: var(--card); border: 1px solid var(--line)"
+    >
+      Skip to content
+    </a>
+
+    <slot />
+
+    <script is:inline>
+      // Reveal on scroll. One observer for the whole page; anything already
+      // in view on load is shown immediately so nothing sits blank.
+      (() => {
+        const items = document.querySelectorAll('.reveal');
+        if (!items.length) return;
+
+        if (
+          matchMedia('(prefers-reduced-motion: reduce)').matches ||
+          !('IntersectionObserver' in window)
+        ) {
+          items.forEach((el) => el.classList.add('in'));
+          return;
+        }
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (!e.isIntersecting) continue;
+              e.target.classList.add('in');
+              io.unobserve(e.target); // reveal once, never re-hide
+            }
+          },
+          { rootMargin: '0px 0px -12% 0px', threshold: 0.06 }
+        );
+
+        items.forEach((el) => io.observe(el));
+      })();
+    </script>
+  </body>
+</html>

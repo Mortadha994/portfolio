@@ -1,0 +1,215 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+:root {
+  --bg: #fbfbfa;
+  --fg: #0c0d10;
+  --muted: #5c6067;
+  --line: #e4e3df;
+  --card: #ffffff;
+  --accent: #2f6f4e;
+  --accent-soft: #2f6f4e18;
+  --glow: #2f6f4e22;
+  --shot-filter: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0c0d10;
+    --fg: #ececea;
+    --muted: #9a9ea6;
+    --line: #23252b;
+    --card: #131519;
+    --accent: #7fc9a0;
+    --accent-soft: #7fc9a01f;
+    --glow: #7fc9a01a;
+    /* Bright product screenshots glare against a dark card. */
+    --shot-filter: brightness(0.88) contrast(1.02);
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #0c0d10;
+  --fg: #ececea;
+  --muted: #9a9ea6;
+  --line: #23252b;
+  --card: #131519;
+  --accent: #7fc9a0;
+  --accent-soft: #7fc9a01f;
+  --glow: #7fc9a01a;
+  --shot-filter: brightness(0.88) contrast(1.02);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ---------- Animation ---------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sweep {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0) scale(1.04);
+  }
+}
+
+/* On load: hero children rise in sequence via --i. */
+.stagger > * {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+/* On scroll: the observer adds .in. */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* The ambient blob behind the hero. */
+.blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(72px);
+  opacity: 0.55;
+  pointer-events: none;
+  animation: breathe 14s ease-in-out infinite;
+}
+
+/* Section label underline that draws itself in. */
+.rule {
+  transform-origin: left;
+  animation: sweep 0.9s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: 0.15s;
+}
+
+/* Cards lift on hover. */
+.lift {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.lift:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  box-shadow: 0 18px 40px -24px var(--glow);
+}
+
+/* Stack chips light up together on card hover. */
+.chip {
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.lift:hover .chip {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  background: var(--accent-soft);
+  color: var(--fg);
+}
+
+/* Screenshot strip. */
+.strip {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+.strip::-webkit-scrollbar {
+  height: 6px;
+}
+
+.strip::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 9999px;
+}
+
+.shot img {
+  filter: var(--shot-filter);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.45s ease;
+}
+
+.shot:hover img {
+  transform: scale(1.03);
+  filter: none;
+}
+
+/* Underline that grows from the left on hover. */
+.ul-grow {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ul-grow:hover {
+  background-size: 100% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .blob {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
