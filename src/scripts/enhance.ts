@@ -59,15 +59,43 @@ if (!reduced) {
     });
   });
 
-  // ---- Screenshots: each shot drifts at its own rate -------------------
-  document.querySelectorAll<HTMLElement>('.strip').forEach((strip) => {
-    strip.querySelectorAll<HTMLElement>('.shot img').forEach((img, i) => {
-      const d = 18 + i * 4;
-      scroll(animate(img, { '--shot-y': [`${d}px`, `${-d}px`] } as any, linear), {
-        target: strip,
-        offset: ['start end', 'end start'],
+  // ---- Screenshot strips slide themselves -----------------------------
+  // The track is translated across the card's own travel through the
+  // viewport, so the shots pan by as you scroll the page — no dragging.
+  // Without JS the viewport keeps overflow-x: auto and stays swipeable.
+  const strips = document.querySelectorAll<HTMLElement>('.strip');
+
+  const driveStrips = () => {
+    strips.forEach((viewport) => {
+      const track = viewport.querySelector<HTMLElement>('.track');
+      if (!track) return;
+
+      const travel = track.scrollWidth - viewport.clientWidth;
+
+      // Everything already fits: leave it alone and stay scrollable.
+      if (travel <= 8) {
+        viewport.style.overflowX = 'auto';
+        track.style.removeProperty('--track-x');
+        return;
+      }
+
+      viewport.style.overflowX = 'hidden';
+      viewport.scrollLeft = 0;
+
+      scroll(animate(track, { '--track-x': ['0px', `-${travel}px`] } as any, linear), {
+        target: viewport,
+        offset: ['start 85%', 'end 15%'],
       });
     });
+  };
+
+  driveStrips();
+
+  // Widths change with the viewport, so recompute after a resize settles.
+  let resizeTimer: number | undefined;
+  addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(driveStrips, 200) as unknown as number;
   });
 
   // ---- Stack chips flick in once per card ------------------------------

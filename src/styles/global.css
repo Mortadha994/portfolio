@@ -311,3 +311,23 @@ body {
 .lift.reveal.in:hover {
   transform: translateY(-4px) scale(var(--card-scale, 1));
 }
+
+/* The strip viewport clips; Motion slides this track across it. */
+@property --track-x {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+.track {
+  transform: translateX(var(--track-x, 0px));
+  will-change: transform;
+}
+
+/* Reduced motion, or no JS: the viewport stays swipeable and the track sits
+   at its natural position, so every shot is still reachable. */
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    transform: none;
+  }
+}

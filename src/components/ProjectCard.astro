@@ -95,14 +95,15 @@ const slug = project.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
             {project.shots.length} screens
           </p>
           <p class="font-mono text-[10px]" style="color: var(--muted)">
-            scroll →
+            auto
           </p>
         </div>
 
-        <ul class="strip mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-3 sm:px-9">
-          {project.shots.map((shot) => (
-            <li class="shot w-[min(84vw,30rem)] shrink-0 snap-start">
-              <div class="overflow-hidden rounded-lg" style="border: 1px solid var(--line)">
+        <div class="strip mt-4 overflow-x-auto px-6 pb-3 sm:px-9">
+          <ul class="track flex w-max gap-4">
+            {project.shots.map((shot) => (
+              <li class="shot flex w-[min(84vw,30rem)] shrink-0 flex-col">
+              <div class="flex flex-1 items-start overflow-hidden rounded-lg" style="border: 1px solid var(--line)">
                 <img
                   src={shot.src}
                   alt={shot.alt}
@@ -111,12 +112,13 @@ const slug = project.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
                   class="block h-auto w-full"
                 />
               </div>
-              <p class="mt-2.5 text-xs" style="color: var(--muted)">
+              <p class="mt-2.5 pt-1 text-xs" style="color: var(--muted)">
                 {shot.caption}
               </p>
             </li>
           ))}
-        </ul>
+          </ul>
+        </div>
 
         {project.note && (
           <p class="px-6 pt-2 text-[11px] italic sm:px-9" style="color: var(--muted)">
