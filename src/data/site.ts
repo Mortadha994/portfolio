@@ -83,22 +83,22 @@ export const projects: Project[] = [
     ],
     shots: [
       {
-        src: '/shots/fahem-hero.png',
+        src: '/shots/fahem-hero.webp',
         alt: 'The Fahem landing page',
         caption: 'Landing — try it before any account',
       },
       {
-        src: '/shots/fahem-guided.png',
+        src: '/shots/fahem-guided.webp',
         alt: 'Guided mode walking through an exercise in four steps',
         caption: 'Mode guidé — four steps, not one answer',
       },
       {
-        src: '/shots/fahem-dark.png',
+        src: '/shots/fahem-dark.webp',
         alt: 'Feature cards in dark mode',
         caption: 'Dark theme, following the OS by default',
       },
       {
-        src: '/shots/fahem-signin.png',
+        src: '/shots/fahem-signin.webp',
         alt: 'The sign-in screen',
         caption: 'Google or email, with verification',
       },
@@ -145,22 +145,22 @@ export const projects: Project[] = [
     ],
     shots: [
       {
-        src: '/shots/mcp-hub-home.png',
+        src: '/shots/mcp-hub-home.webp',
         alt: 'The MCP Hub dashboard',
         caption: 'Dashboard — the governed estate at a glance',
       },
       {
-        src: '/shots/mcp-hub-catalog.png',
+        src: '/shots/mcp-hub-catalog.webp',
         alt: 'The MCP Hub catalog listing servers with their lifecycle state',
         caption: 'Catalog — filtered by category, local vs. hosted',
       },
       {
-        src: '/shots/mcp-hub-admin.png',
+        src: '/shots/mcp-hub-admin.webp',
         alt: 'The admin view for managing MCP servers',
         caption: 'Admin — lifecycle transitions and bridges',
       },
       {
-        src: '/shots/mcp-hub-users.png',
+        src: '/shots/mcp-hub-users.webp',
         alt: 'The user administration view',
         caption: 'Users — three roles, one permission model',
       },
@@ -201,22 +201,22 @@ export const projects: Project[] = [
     stack: ['Java', 'Spring Boot 3', 'Spring Security', 'JPA / Hibernate', 'Angular 17', 'TypeScript', 'FastAPI', 'Groq / Llama 3.3', 'PyMuPDF', 'PostgreSQL', 'STOMP / WebSocket', 'Docker', 'nginx'],
     shots: [
       {
-        src: '/shots/pm-kanban.png',
+        src: '/shots/pm-kanban.webp',
         alt: 'The Kanban board with four columns, priority badges and workload counters',
         caption: 'Kanban — four columns, priorities, workload counters',
       },
       {
-        src: '/shots/pm-profile.png',
+        src: '/shots/pm-profile.webp',
         alt: 'The AI CV analyser, offering to extract skills from an uploaded PDF résumé',
         caption: 'Analyseur de CV — a PDF becomes a skill profile',
       },
       {
-        src: '/shots/pm-dashboard.png',
+        src: '/shots/pm-dashboard.webp',
         alt: 'The admin dashboard with project, task and team counters',
         caption: 'Dashboard — projects, tasks and seats at a glance',
       },
       {
-        src: '/shots/pm-login.png',
+        src: '/shots/pm-login.webp',
         alt: 'The ProManager sign-in screen',
         caption: 'Sign-in, with demo access spelled out',
       },
@@ -253,22 +253,22 @@ export const projects: Project[] = [
     stack: ['PHP 8.3', 'Laravel', 'Blade', 'Alpine.js', 'Tailwind', 'MySQL', 'Groq / Llama 3.3', 'Vite'],
     shots: [
       {
-        src: '/shots/med-patient.png',
+        src: '/shots/med-patient.webp',
         alt: 'The patient dashboard, with the next appointment, the AI assistant and recorded vitals',
         caption: 'Espace patient — next appointment, vitals, agenda',
       },
       {
-        src: '/shots/med-ai.png',
+        src: '/shots/med-ai.webp',
         alt: 'The AI orientation screen with symptoms described in free text',
         caption: 'Orientation IA — symptoms in, speciality and urgency out',
       },
       {
-        src: '/shots/med-doctor.png',
+        src: '/shots/med-doctor.webp',
         alt: 'The doctor dashboard showing the day’s schedule and critical alerts',
         caption: 'Espace médecin — the day’s plan and critical alerts',
       },
       {
-        src: '/shots/med-suivi.png',
+        src: '/shots/med-suivi.webp',
         alt: 'Health tracking with blood pressure and glycaemia charts against critical thresholds',
         caption: 'Suivi santé — constants charted against thresholds',
       },
