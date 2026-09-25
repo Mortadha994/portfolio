@@ -57,7 +57,12 @@ All CSS, driven by one small `IntersectionObserver` in `Base.astro` that adds
 
 ## Deploying (Cloudflare Pages)
 
-Connected through the Pages Git integration, so every push to `main` deploys:
+Deploys run from the command line; pushing to `main` does not deploy by itself.
+
+```sh
+npm run build
+npx wrangler pages deploy dist --project-name mortadha --branch main
+```
 
 | Setting | Value |
 |---|---|
