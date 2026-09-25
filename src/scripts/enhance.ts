@@ -59,43 +59,69 @@ if (!reduced) {
     });
   });
 
-  // ---- Screenshot strips slide themselves -----------------------------
-  // The track is translated across the card's own travel through the
-  // viewport, so the shots pan by as you scroll the page — no dragging.
-  // Without JS the viewport keeps overflow-x: auto and stays swipeable.
-  const strips = document.querySelectorAll<HTMLElement>('.strip');
+  // ---- Screenshot strips drift on their own ----------------------------
+  // A steady wind: the track loops forever at a low speed, whether or not the
+  // page is scrolling. It eases to a halt under the mouse and only runs while
+  // its card is on screen. The shots are cloned once so the loop has no seam;
+  // clones are hidden from assistive tech.
+  const SPEED = 38; // px per second
 
-  const driveStrips = () => {
-    strips.forEach((viewport) => {
-      const track = viewport.querySelector<HTMLElement>('.track');
-      if (!track) return;
+  document.querySelectorAll<HTMLElement>('.strip').forEach((viewport) => {
+    const track = viewport.querySelector<HTMLElement>('.track');
+    if (!track) return;
+    const originals = Array.from(track.children) as HTMLElement[];
+    if (originals.length < 2) return;
 
-      const travel = track.scrollWidth - viewport.clientWidth;
-
-      // Everything already fits: leave it alone and stay scrollable.
-      if (travel <= 8) {
-        viewport.style.overflowX = 'auto';
-        track.style.removeProperty('--track-x');
-        return;
-      }
-
-      viewport.style.overflowX = 'hidden';
-      viewport.scrollLeft = 0;
-
-      scroll(animate(track, { '--track-x': ['0px', `-${travel}px`] } as any, linear), {
-        target: viewport,
-        offset: ['start 85%', 'end 15%'],
-      });
+    originals.forEach((li) => {
+      const clone = li.cloneNode(true) as HTMLElement;
+      clone.setAttribute('aria-hidden', 'true');
+      clone.querySelector('img')?.setAttribute('loading', 'eager');
+      clone.querySelector('[role=button]')?.removeAttribute('tabindex');
+      track.appendChild(clone);
     });
-  };
+    track.dataset.looped = '1';
 
-  driveStrips();
+    viewport.style.overflowX = 'hidden';
+    viewport.scrollLeft = 0;
 
-  // Widths change with the viewport, so recompute after a resize settles.
-  let resizeTimer: number | undefined;
-  addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(driveStrips, 200) as unknown as number;
+    let x = 0;
+    let loop = 0;
+    let speed = 1;
+    let target = 1;
+    let visible = false;
+    let last = 0;
+
+    const measure = () => {
+      const clone = track.children[originals.length] as HTMLElement;
+      loop = clone.offsetLeft - originals[0].offsetLeft;
+    };
+    measure();
+    addEventListener('resize', measure);
+
+    viewport.addEventListener('pointerenter', (e) => {
+      if (e.pointerType === 'mouse') target = 0;
+    });
+    viewport.addEventListener('pointerleave', () => (target = 1));
+
+    const tick = (now: number) => {
+      const dt = Math.min((now - last) / 1000, 0.05);
+      last = now;
+      speed += (target - speed) * Math.min(dt * 6, 1);
+      if (loop > 0) {
+        x = (x + SPEED * speed * dt) % loop;
+        track.style.setProperty('--track-x', `${-x}px`);
+      }
+      if (visible) requestAnimationFrame(tick);
+    };
+
+    new IntersectionObserver(([entry]) => {
+      const was = visible;
+      visible = entry.isIntersecting;
+      if (visible && !was) {
+        last = performance.now();
+        requestAnimationFrame(tick);
+      }
+    }).observe(viewport);
   });
 
   // ---- Stack chips flick in once per card ------------------------------
@@ -127,4 +153,75 @@ if (!reduced) {
     },
     { amount: 0.6 }
   );
+}
+
+// ---- Lightbox ------------------------------------------------------------
+// Click (or Enter) on any screenshot to see it full size. Arrow keys or the
+// buttons step through that project's shots; Esc or a click outside closes.
+{
+  const dlg = document.createElement('dialog');
+  dlg.className = 'lightbox';
+  dlg.setAttribute('aria-label', 'Screenshot viewer');
+  dlg.innerHTML =
+    '<button type="button" class="lb-close" aria-label="Close">&times;</button>' +
+    '<button type="button" class="lb-nav lb-prev" aria-label="Previous">&#8592;</button>' +
+    '<figure><img alt="" /><figcaption></figcaption></figure>' +
+    '<button type="button" class="lb-nav lb-next" aria-label="Next">&#8594;</button>';
+  document.body.appendChild(dlg);
+
+  const big = dlg.querySelector('img') as HTMLImageElement;
+  const cap = dlg.querySelector('figcaption') as HTMLElement;
+  let shots: HTMLElement[] = [];
+  let at = 0;
+
+  const show = (i: number) => {
+    at = (i + shots.length) % shots.length;
+    const li = shots[at];
+    const img = li.querySelector('img') as HTMLImageElement;
+    big.src = img.currentSrc || img.src;
+    big.alt = img.alt;
+    cap.replaceChildren(...Array.from(li.querySelectorAll('p > *')).map((n) => n.cloneNode(true)));
+  };
+
+  const open = (li: HTMLElement) => {
+    const track = li.parentElement as HTMLElement;
+    const all = Array.from(track.children) as HTMLElement[];
+    const n = track.dataset.looped ? all.length / 2 : all.length;
+    shots = all.slice(0, n);
+    show(all.indexOf(li) % n);
+    dlg.querySelectorAll<HTMLElement>('.lb-nav').forEach((b) => (b.hidden = n < 2));
+    dlg.showModal();
+  };
+
+  document.querySelectorAll<HTMLElement>('.shot').forEach((li) => {
+    const img = li.querySelector('img');
+    const box = img?.parentElement;
+    if (!img || !box || li.getAttribute('aria-hidden')) return;
+    box.setAttribute('role', 'button');
+    box.setAttribute('tabindex', '0');
+    box.setAttribute('aria-label', img.alt || 'Open screenshot');
+    box.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        open(li);
+      }
+    });
+  });
+
+  // Delegated so the cloned shots open too.
+  addEventListener('click', (e) => {
+    const li = (e.target as HTMLElement).closest?.('.shot') as HTMLElement | null;
+    if (li && li.closest('.track')) open(li);
+  });
+
+  dlg.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    if (t.closest('.lb-prev')) show(at - 1);
+    else if (t.closest('.lb-next')) show(at + 1);
+    else if (t !== big) dlg.close();
+  });
+  dlg.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') show(at - 1);
+    if (e.key === 'ArrowRight') show(at + 1);
+  });
 }

@@ -660,7 +660,7 @@ export const ui = {
     fr: 'Le plus rapide pour me joindre est le mail. Je lis tout.',
   },
   screens: { en: 'screens', fr: 'écrans' },
-  auto: { en: 'auto', fr: 'auto' },
+  auto: { en: 'tap to enlarge', fr: 'toucher pour agrandir' },
   featured: { en: 'Featured', fr: 'À la une' },
   liveSite: { en: 'Live site →', fr: 'Site en ligne →' },
   source: { en: 'Source →', fr: 'Code source →' },
